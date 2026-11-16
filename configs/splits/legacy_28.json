@@ -1,0 +1,8 @@
+{
+  "status": "same-session provisional, not verified Run or temporal independence",
+  "source_relative_to_handoff": "payload/ssvep_covariance_v4/reports/case_assignments.csv",
+  "sha256": "567aa4c3d2b5d8e967a340d2cded10a9b7fc5d03429550ee8fd8cb7f021064ed",
+  "cases": 28,
+  "protocols": ["within_task_blocked_provisional", "equal20_within_task_provisional", "cross_task_balanced30_provisional"],
+  "aggregation": "pooled nonduplicated validation predictions per protocol/task"
+}

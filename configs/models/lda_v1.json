@@ -1,0 +1,8 @@
+{
+  "status": "documented fixed configuration; implemented in models/lda.py",
+  "imputer": {"strategy": "median", "add_indicator": true, "keep_empty_features": true},
+  "scaler": "StandardScaler fitted on training only",
+  "classifier": {"name": "LinearDiscriminantAnalysis", "solver": "lsqr", "shrinkage": "auto", "priors": "uniform registered classes"},
+  "historical_n_classes": 20,
+  "rejection_threshold": null
+}

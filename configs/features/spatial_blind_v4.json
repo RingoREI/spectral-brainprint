@@ -1,0 +1,32 @@
+{
+  "version": "blind-spectrum-covariance-v4.0",
+  "date": "2026-11-02",
+  "scope": "SSVEP blind spectral descriptors and18-channel covariance baselines; no new fitted peak, FOOOF or aperiodic parameter analysis",
+  "input": "data_basic, each independent4-second1200x18 record, fs300, original reference and native units",
+  "extra_time_domain_processing": "channel-wise mean removal only; no ICA, additional filters, record concatenation or trial/session pooling",
+  "covariance": {
+    "empirical_normalization": "X.T@X/1200 after within-record centering",
+    "shrinkage": "scikit-learn OAS formula, vectorized per record; coefficient checked against sklearn.covariance.oas",
+    "eigenvalue_floor": "1e-8*trace(C)/18, only for positive definiteness and logarithms; clipping tracked",
+    "blocks": {"cov_oas_upper":171,"cov_trace_upper":171,"corr_pearson_off":153,"logcov_upper":171,"logcov_trace_upper":171},
+    "correlation": "Pearson from empirical covariance before OAS, not shrunken covariance; constant channels flagged and correlations set0",
+    "trace_normalization": "divide covariance by its trace, removing global gain but not all channel-specific scaling effects",
+    "matrix_log": "natural matrix logarithm via eigen decomposition, not elementwise log; symmetric upper triangle, off-diagonals multiplied sqrt2",
+    "interpretation": "mixed-signal second-order statistics; not pure periodicity, source connectivity or causal brain networks; OAS iid/Gaussian theory not guaranteed for temporally correlated EEG"
+  },
+  "blind_spectrum": {
+    "psd": "unchanged V1 Welch2s periodic Hann, 50% overlap, mean, nfft600, density, 0.5Hz grid; no smoothing or background removal",
+    "roi_channels": ["O1","O2","P3","P4"],
+    "fixed_power_bins_hz": "[4,5], [5,6], ..., [39,40], integrated linear PSD; shared trapezoid endpoints",
+    "blocks": {"blind_logpower":144,"blind_shape":144,"blind_local_contrast":120,"blind_harmonic_pattern":60},
+    "shape": "each1Hz bin divided by same-record same-channel4-40Hz integral, no log",
+    "local_contrast_centers_hz": "6,7,...,35; log10 power[f-0.5,f+0.5] minus log10 mean(power[f-2.5,f-1.5], power[f+1.5,f+2.5])",
+    "harmonic_candidates_hz": "4,5,...,18; score=min(local_log_contrast(f),local_log_contrast(2f)), all candidates retained",
+    "interpretation": "blind frequency descriptors only; no winning frequency, stimulus frequency truth, target label, physiological response significance or known-f0 SNR claimed"
+  },
+  "validation": "reuse V2 exact28 cases: filename-block same-session development, equal20 training records per identity, balanced cross-task diagnostic",
+  "classifier": "same training-only median imputation, StandardScaler and uniform-prior shrinkage LDA; fixed parameters",
+  "task_comparisons": "all four task labels used only for stratified diagnostics; blind features have identical fixed definitions for every record",
+  "test_policy": "optional deterministic single-record feature extraction only; no test labels, dataset-level adaptation or parameter selection",
+  "sources": ["https://scikit-learn.org/stable/modules/covariance.html", "https://scikit-learn.org/stable/modules/generated/oas-function.html", "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.logm.html", "https://mne.tools/stable/auto_tutorials/time-freq/50_ssvep.html"]
+}

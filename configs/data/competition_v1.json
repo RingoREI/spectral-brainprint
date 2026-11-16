@@ -1,0 +1,13 @@
+{
+  "status": "historical input contract, no private root path",
+  "shape_per_record": [1200, 18],
+  "sampling_rate_hz": 300,
+  "channels": ["P3", "C3", "F3", "Fz", "F4", "C4", "P4", "Cz", "Fp1", "Fp2", "T3", "T5", "O1", "O2", "F7", "F8", "T6", "T4"],
+  "unit": "device_native_unverified",
+  "reference": "unknown original reference preserved",
+  "input_view": "data_basic",
+  "canonical_key": ["record_id", "path"],
+  "registered_identity_labels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+  "unknown_output_code": 0,
+  "test_identity_labels_available": false
+}

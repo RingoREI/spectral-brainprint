@@ -1,0 +1,7 @@
+# Actual environment used for the 2026-11-12 checks; Python 3.10.10.
+# This is a direct-dependency record, not a transitive lockfile.
+numpy==2.2.6
+scipy==1.14.1
+scikit-learn==1.7.2
+h5py==3.16.0
+threadpoolctl==3.6.0

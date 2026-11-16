@@ -1,0 +1,59 @@
+{
+  "version": "power-v1.0.0",
+  "frozen_date": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "purpose": "record-local mixed EEG band-power baseline for brainprint identification; not pure periodic decomposition",
+  "input_dataset": "data_basic",
+  "sampling_rate_hz": 300,
+  "samples_per_record": 1200,
+  "channels": ["P3", "C3", "F3", "Fz", "F4", "C4", "P4", "Cz", "Fp1", "Fp2", "T3", "T5", "O1", "O2", "F7", "F8", "T6", "T4"],
+  "physical_amplitude_unit": "device_native_unverified",
+  "additional_time_domain_preprocessing": "none; preserve supplied DC-removed data, original reference and all channels",
+  "ica_components_used": false,
+  "quality_masks": "retained for diagnostics; not used for dropping, zeroing or imputing signal",
+  "welch": {
+    "method": "scipy.signal.welch",
+    "window": "explicit scipy.signal.get_window('hann', 600, fftbins=True)",
+    "nperseg": 600,
+    "noverlap": 300,
+    "nfft": 600,
+    "detrend": "constant per Welch segment",
+    "scaling": "density",
+    "average": "mean",
+    "return_onesided": true,
+    "time_axis": -2,
+    "segments_per_4_second_record": 3,
+    "frequency_grid_spacing_hz": 0.5,
+    "zero_padding": false
+  },
+  "bands": [
+    {"name": "theta", "low_hz": 4, "high_hz": 8},
+    {"name": "alpha", "low_hz": 8, "high_hz": 13},
+    {"name": "beta", "low_hz": 13, "high_hz": 30}
+  ],
+  "integration": "trapezoidal integral of LINEAR PSD, including aligned low/high boundary nodes; adjacent bands share trapezoidal endpoint weights, not full duplicated bins",
+  "log_power": "log10(integrated native-amplitude-squared power), not 10*log10 and not log of PSD before integration",
+  "relative_power": "band integral / same-record same-channel 1-40 Hz integral; computed before log",
+  "relative_denominator_hz": [1, 40],
+  "numerical_power_floor": 1e-300,
+  "zero_power_policy": "flag invalid_power_channel; finite floor for log and zero relative placeholder; never automatically assign identity 0",
+  "output": {
+    "feature_count": 108,
+    "blocks": ["54 log10 band powers", "54 relative band powers"],
+    "within_block_order": "channel order above; within each channel theta, alpha, beta",
+    "dtype": "float64",
+    "global_key": "record_id or full path; sample alone is not unique in Train",
+    "model_standardization": "not applied here; fit only on the training partition during later model development"
+  },
+  "selection_evidence": {
+    "training_records": 480,
+    "sampling": "20 identities x 4 tasks x 6 records, fixed seed 20261102",
+    "test_used_to_select_settings": false,
+    "status": "frozen implementation baseline, not recognition-performance optimum",
+    "observations": ["50 Hz trough and steep high-frequency attenuation visible in train spectra; upstream filtering is an inference, not verified provenance", "no sampled record met the declared multichannel line-noise flag", "2s uses three Welch segments; 4s uses only one"]
+  },
+  "sources": [
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html",
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.get_window.html"
+  ]
+}
