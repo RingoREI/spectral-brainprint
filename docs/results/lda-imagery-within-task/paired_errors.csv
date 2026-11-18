@@ -1,0 +1,5 @@
+baseline,comparison,transition,count
+logcov171,power_logcov279,both_correct,5244
+logcov171,power_logcov279,corrected,106
+logcov171,power_logcov279,regressed,30
+logcov171,power_logcov279,both_wrong,124

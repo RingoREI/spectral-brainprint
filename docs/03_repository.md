@@ -10,6 +10,7 @@ myBrainPrintProject/
   spectral-brainprint/
     pyproject.toml
     README.md
+    LDA_EXPERIMENT_REPORT.md    四任务 LDA 统一英文报告
     configs/{data,psd,features,splits,models}/
     src/spectral_brainprint/
       io/                      索引、H5/NPZ适配、严格对齐
@@ -23,6 +24,7 @@ myBrainPrintProject/
     scripts/                   本地迁移回归等维护脚本
     environments/              历史环境记录、当前已验证版本
     artifacts/                 本地生成结果，Git忽略
+      lda/                     LDA 运行、图表、练习与合成示例的统一目录
     local/                     本地源码快照、私有配置/核验，Git忽略
 ```
 
@@ -43,7 +45,7 @@ IO负责读取、身份或主键核对及保持记录顺序。谱和特征模块
 - 保留原始V1/V4配置原字节；新增PSD或拟合方式另建配置版本，不能悄悄改名覆盖。
 - 公共配置不填私人根路径。路径采用CLI或未跟踪的 `local/paths.json`；先确认存在再读。
 - 每次实验输出代码版本/哈希、环境、配置哈希、特征字典哈希、划分哈希、记录数量、随机种子、指标和逐条预测。当前最小入口记录主要输入哈希与环境；完整实验管理尚待G1扩展。
-- 结果放 `artifacts/<run_id>/`，每次独立；同路径存在时拒绝覆盖。不要在源码或冻结数据目录直接生成新结果。
+- LDA 结果集中在 `artifacts/lda/`：既有逐次结果放 `runs/<task>/`，各任务生成报告放 `reports/<task>/`，汇总资产放 `overview/`，早期练习和合成示例分别放 `learning/` 与 `demo/`。新复现用 `artifacts/lda/reproductions/<run_id>/<task>/runs/` 和 `report/`；其他模型结果用各自的实验目录。每次运行独立；同路径存在时拒绝覆盖。不要在源码或冻结数据目录直接生成新结果。
 
 ## 版本管理策略
 

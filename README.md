@@ -6,34 +6,37 @@
 
 项目首先回答：非周期参数是否在功率和空间基线之外提供身份信息，以及这种增益能否跨任务、记录组和扰动条件保持。深度阶段描述为“结合谱参数化先验与深度表示学习的EEG神经指纹识别算法”；收益与复杂度均须通过实验验证。
 
-## 已复现的 LDA 特征对照
+## LDA 实验结果
 
-[Experiment Note 01](brainprint-experiment-note.md) provides the experimental setup, pooled and per-fold results, error analysis, and limitations in English.
+已完成 EC、EO、Imagery、SSVEP 四任务的三组特征、三折验证，共 **36 次 LDA 训练**。每个任务分别在自己的记录上训练和验证，20 个注册身份均在训练中出现；填补与标准化只在训练折拟合。下面是合并不重复验证预测得到的平衡准确率。
 
-闭眼任务 EC 的同会话开发实验使用 20 个注册身份、三折文件编号分块划分。每组特征使用同一批训练和验证记录，填补与标准化仅在训练折拟合。下面的总体指标由三折共 1,072 条不重复的验证预测合并计算。
+| 任务 | 验证记录 | 功率108 | 协方差171 | 合用279 | 合用相对协方差 |
+|---|---:|---:|---:|---:|---:|
+| EC | 1,072 | 81.84% | 92.25% | 95.23% | +2.97 pp |
+| EO | 1,070 | 76.17% | 87.97% | 91.33% | +3.36 pp |
+| Imagery | 5,504 | 92.62% | 95.85% | 97.21% | +1.36 pp |
+| SSVEP | 3,658 | 91.96% | 95.97% | 98.27% | +2.31 pp |
 
-| 特征 | 维数 | 准确率 | 平衡准确率 | Macro-F1 |
-|---|---:|---:|---:|---:|
-| 频带功率 | 108 | 82.46% | 81.84% | 82.18% |
-| 对数协方差 | 171 | 92.54% | 92.25% | 92.66% |
-| 功率＋对数协方差 | 279 | **95.62%** | **95.23%** | **95.55%** |
+![Four-task LDA feature comparison and observed gains](docs/results/lda-within-task-overview.png)
 
-功率加入协方差基线后，合并平衡准确率增加 **2.97 个百分点**，三个折的增益依次为 **4.58、1.64、2.68 个百分点**。在相同验证记录上，40 条预测由错误变为正确，7 条由正确变为错误。该对照支持功率与空间统计在当前开发协议下的互补性。
+*左图为各任务的合并平衡准确率；右图区分合并预测计算的功率增益与三个实际验证折的增益。逐折点描述当前分块结果，不是置信区间。任务间训练样本量不同。*
 
-![三组 LDA 的总体指标与逐折平衡准确率](docs/results/lda-ec-within-task/lda_performance.png)
+四任务、十二个验证折的功率增益方向均为正，逐身份结果也存在回退。当前证据支持功率与空间统计在**同会话、任务内开发协议**下的互补性；跨任务迁移、跨会话稳定性、非周期增益与深度模型效果各需后续实验。
 
-*左图为合并验证预测的指标，右图展示三组特征各自在三个验证折中的表现。折间变化来自文件编号分块划分。当前结果覆盖一个有标签会话，跨会话和未知身份表现仍待独立评估。*
+英文 [LDA Experiment Report](LDA_EXPERIMENT_REPORT.md) 统一记录实验设置、全部指标、逐折变化、配对错误、逐身份分析、图表、来源与复现命令。CSV 和各任务图表保存在 `docs/results/`，本地逐次结果集中在被 Git 忽略的目录：
 
-逐身份召回率显示 16 个身份改善、3 个持平、1 个下降。身份 05 从协方差基线的 95.0% 降至 87.5%，应和整体增益一并检查。详细图表、混淆矩阵、CSV 和 PDF 见[实验报告](docs/results/lda-ec-within-task/README.md)。
-
-安装绘图依赖后，用已有逐条预测生成一份新的报告目录。
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -e ".[plots]"
-.\.venv\Scripts\python.exe scripts/summarize_lda_results.py --input-dir artifacts/lda-ec-all-folds --output-dir artifacts/lda-ec-report
+```text
+artifacts/lda/
+  runs/{ec,eo,imagery,ssvep}/       每任务九个 JSON 与逐折汇总
+  reports/{ec,eo,imagery,ssvep}/    各任务表格、PNG/PDF 和 provenance
+  overview/                       四任务指标与总览图
+  learning/                       早期 EC 第 0 折手工练习
+  demo/                           合成示例，验证工程流程
+  README.md                       本地目录索引
+  migration_manifest.json         已移动文件的原路径、新路径与 SHA256
 ```
 
-`--skip-plots` 只导出表格。每次选择新的输出目录，保留已生成的报告。汇总脚本会检查记录对齐、跨折验证记录无重复、输入哈希一致，并从逐条预测重新计算指标。原始逐条预测保存在被 Git 忽略的 `artifacts/` 中，README 图表使用汇总结果。
+复现时用 `scripts/run_lda_ablation.py` 的 `--task` 选择 `EC`、`EO`、`Imagery` 或 `SSVEP`（默认 EC），再用 `scripts/summarize_lda_results.py` 汇总。每次选择新的输出目录；完整命令见报告。移动文件保留了全部原始内容和来源清单，运行产物继续由 `.gitignore` 排除。
 
 ## 从这里开始
 
@@ -54,13 +57,13 @@
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -e .
 .\.venv\Scripts\python -m unittest discover -s tests -v
-.\.venv\Scripts\python -m spectral_brainprint demo --output artifacts/demo.json
+.\.venv\Scripts\python -m spectral_brainprint demo --output artifacts/lda/demo/demo-rerun.json
 ```
 
 模拟流程只验证工程连通性，输出不用于证明真实脑纹准确率。读取已有交接包时，显式提供 `--package-root`，该值为包含 `handoff_manifest.json` 与 `payload/` 的目录。先复现一个案例：
 
 ```powershell
-python -m spectral_brainprint reproduce --package-root "<交接包目录>" --feature-set power108 --protocol within_task_blocked_provisional --task EC --fold 0 --output artifacts/ec_fold0.json
+python -m spectral_brainprint reproduce --package-root "<交接包目录>" --feature-set power108 --protocol within_task_blocked_provisional --task EC --fold 0 --output artifacts/lda/learning/ec-fold0-rerun.json
 ```
 
 此入口只用已有Train特征，校验索引/列定义、检查训练验证记录和身份，再在训练折拟合填补、标准化与LDA，并与历史同一案例的指标比较。它不训练最终团队模型，也不校准拒识阈值。
