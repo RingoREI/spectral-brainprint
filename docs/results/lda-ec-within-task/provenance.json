@@ -1,0 +1,103 @@
+{
+  "task": "EC",
+  "protocol": "within_task_blocked_provisional",
+  "folds": [
+    0,
+    1,
+    2
+  ],
+  "source_files": [
+    {
+      "filename": "fold0-logcov171.json",
+      "sha256": "bada3b80a8ca2c0cbcf6fb34298c0be55ab35794b55ccce21de1b5691ddf51bd",
+      "matches_history_at_1e_12": true
+    },
+    {
+      "filename": "fold0-power108.json",
+      "sha256": "21f04fa8807f04cd54f59af79dd4d21c1a0d32d9e1c6f56a2589ab833371a142",
+      "matches_history_at_1e_12": true
+    },
+    {
+      "filename": "fold0-power_logcov279.json",
+      "sha256": "18617d21cf51ad64ac9185f0a7711f1688ef8252642eb0994389de65f29b0e78",
+      "matches_history_at_1e_12": true
+    },
+    {
+      "filename": "fold1-logcov171.json",
+      "sha256": "c1d960d09f26cb075897ef2cfe2c290171d2a1551e4895fd79ea6360a196ae3c",
+      "matches_history_at_1e_12": true
+    },
+    {
+      "filename": "fold1-power108.json",
+      "sha256": "a64ae52f9d7413448360a4a5a0cea49ab011fb162d94a0b991cd189fc2fb32f4",
+      "matches_history_at_1e_12": true
+    },
+    {
+      "filename": "fold1-power_logcov279.json",
+      "sha256": "a88225af76338033355b5e7146d823ddb26501778fb8d14967d63184b074bb81",
+      "matches_history_at_1e_12": true
+    },
+    {
+      "filename": "fold2-logcov171.json",
+      "sha256": "1ce3f6fe43d78eaa71debc3f439dc68cc266eef8b1a6e815084d0704897aaa2e",
+      "matches_history_at_1e_12": true
+    },
+    {
+      "filename": "fold2-power108.json",
+      "sha256": "14a3e2d3fe1525038bf0cc587d55cda0dd7d7d6ee52dff9d12c0a17114845656",
+      "matches_history_at_1e_12": true
+    },
+    {
+      "filename": "fold2-power_logcov279.json",
+      "sha256": "972b3e4fb318ec0b502d0aadb3ec1d4fd4feffd40ca0e110fb3a1876e37361ed",
+      "matches_history_at_1e_12": true
+    }
+  ],
+  "input_sha256": {
+    "payload/ssvep_covariance_v4/reports/case_assignments.csv": "567aa4c3d2b5d8e967a340d2cded10a9b7fc5d03429550ee8fd8cb7f021064ed",
+    "payload/periodic_power_v1/features/train_power_v1.npz": "4c418af23ec928460a2e6c4f7c533258069cbf09bda3285f236a93ca981e5292",
+    "payload/ssvep_covariance_v4/features/train_blind_covariance_v4.npz": "f5d440d109e132c5dc828cc1c69599da32d78c0e529833f57280dbd90ca2eda4",
+    "payload/periodic_power_v1/features/feature_dictionary.csv": "805f7358839a8ffa97f3462a33057caa0203e58c3df3afee4384077d59769285",
+    "payload/ssvep_covariance_v4/features/feature_dictionary.csv": "13f76d0a65462e922c3be90bb472ef0963ce5c22f1590bb0cf466fe701b5e00a"
+  },
+  "environments": [
+    {
+      "python": "3.13.17",
+      "numpy": "2.5.5",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "threadpoolctl": "3.8.0"
+    }
+  ],
+  "aggregation": "Metrics recomputed from pooled nonduplicated validation predictions",
+  "validation_records": 1072,
+  "identity_labels": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "all_history_metrics_match": true,
+  "generator_sha256": "fa55257c0b1a90be47f3b22e2f032226c0d0d08edb024ab178dedb964f254934",
+  "summary_environment": {
+    "numpy": "2.5.5",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.2"
+  }
+}
