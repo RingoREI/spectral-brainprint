@@ -8,7 +8,7 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("lda_summary", ROOT / "scripts/summarize_lda_results.py")
+spec = importlib.util.spec_from_file_location("lda_summary", ROOT / "scripts/lda/summarize_lda_results.py")
 summary = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(summary)
 

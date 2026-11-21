@@ -1,0 +1,10 @@
+# Actual CPU ablation environment, 2026-11-19. Direct dependencies, not a complete lockfile.
+# Python 3.13.17; Torch CPU wheel from https://download.pytorch.org/whl/cpu
+numpy==2.5.5
+scipy==1.18.1
+scikit-learn==1.9.1
+threadpoolctl==3.8.0
+matplotlib==3.11.2
+torch==2.15.0+cpu
+h5py==3.16.0
+fooof==1.1.0

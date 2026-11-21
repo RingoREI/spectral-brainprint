@@ -13,6 +13,7 @@ dependencies = ["numpy>=2.0,<3", "scipy>=1.14,<2", "scikit-learn>=1.7,<2"]
 plots = ["matplotlib>=3.10,<4"]
 eeg = ["h5py>=3.10,<4"]
 deep = ["torch>=2.7.1,<3", "h5py>=3.10,<4"]
+ablation = ["torch>=2.7.1,<3", "h5py>=3.10,<4", "fooof==1.1.0", "matplotlib>=3.10,<4"]
 
 [project.scripts]
 spectral-brainprint = "spectral_brainprint.cli:main"
